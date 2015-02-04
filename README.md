@@ -50,6 +50,7 @@ features[:name_of_feature].disable
 
 * The features specified in the URL will take precendence over those specified in the controller
 * The enabled/disabled features will be stored in the user's cookie
+* Smoke tests could enable or disable features using this mechanism
 
 ## Checking if a feature is enabled
 
@@ -76,5 +77,5 @@ If a consultant is starting a new Rfq, we'll need to reset the features to their
 Caveats:
 
 - Breaks X_Rated AB tests as no more storing ab tests in answer set
-- Tests that start after the Rfq is created will not be stored on Rfq (thus will not be available in backoffice)
+- Features enabled after the Rfq is created will not be stored on Rfq (thus will not be available in backoffice)
 - No more storing ab tests in web_rfq - removed responsibility of ab test publishing from Rfq
