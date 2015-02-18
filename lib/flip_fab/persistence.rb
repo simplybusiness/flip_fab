@@ -9,11 +9,11 @@ module FlipFab
     end
 
     def read
-      raise NotSupportedException
+      raise NotImplementedError
     end
 
     def write value
-      raise NotSupportedException
+      raise NotImplementedError
     end
   end
 end
