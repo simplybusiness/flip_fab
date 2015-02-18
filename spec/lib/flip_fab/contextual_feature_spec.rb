@@ -55,6 +55,34 @@ module FlipFab
           end
         end
       end
+
+      context 'when there are multiple adapters' do
+        let(:persistence_adapters) { [TestPersistence, TestMultiplePersistence] }
+
+        context 'when the first adapter has enabled and the second adapter has nil' do
+          let(:feature_states) {{ example_feature: :enabled, different_example_feature: nil }}
+
+          it 'returns true' do
+            expect(subject.enabled?).to be_truthy
+          end
+        end
+
+        context 'when the first adapter has nil and the second adapter has enabled' do
+          let(:feature_states) {{ example_feature: nil, different_example_feature: :enabled }}
+
+          it 'returns true' do
+            expect(subject.enabled?).to be_truthy
+          end
+        end
+
+        context 'when the first adapter has disabled and the second adapter has enabled' do
+          let(:feature_states) {{ example_feature: :disabled, different_example_feature: :enabled }}
+
+          it 'returns false' do
+            expect(subject.enabled?).to be_falsey
+          end
+        end
+      end
     end
 
     describe '#disabled?' do
@@ -78,6 +106,19 @@ module FlipFab
 
     describe '#enable' do
 
+      context 'when there are multiple persistence adapters' do
+        let(:persistence_adapters) { [TestPersistence, TestMultiplePersistence] }
+        let(:feature_states) {{ example_feature: :disabled, different_example_feature: :disabled }}
+
+        it 'changes the state of the feature' do
+          expect{subject.enable}.to change{subject.enabled?}.from(false).to(true)
+        end
+
+        it 'persists the state in the adapters' do
+          expect{ subject.enable }.to change{ feature_states }.from({ example_feature: :disabled, different_example_feature: :disabled }).to({ example_feature: :enabled, different_example_feature: :enabled })
+        end
+      end
+
       context 'when there is a persistence adapter' do
         let(:persistence_adapters) { [TestPersistence] }
 
@@ -97,8 +138,7 @@ module FlipFab
           end
 
           it 'persists the state in the adapter' do
-            expect_any_instance_of(TestPersistence).to receive(:write).with(:enabled)
-            subject.enable
+            expect{ subject.enable }.to change{ feature_states }.from({ example_feature: :disabled }).to({ example_feature: :enabled })
           end
         end
 
@@ -113,8 +153,7 @@ module FlipFab
             end
 
             it 'persists the state in the adapter' do
-              expect_any_instance_of(TestPersistence).to receive(:write).with(:enabled)
-              subject.enable
+              expect{ subject.enable }.to change{ feature_states }.from({ }).to({ example_feature: :enabled })
             end
           end
 
@@ -126,8 +165,7 @@ module FlipFab
             end
 
             it 'persists the state in the adapter' do
-              expect_any_instance_of(TestPersistence).to receive(:write).with(:enabled)
-              subject.enable
+              expect{ subject.enable }.to change{ feature_states }.from({ }).to({ example_feature: :enabled })
             end
           end
         end
@@ -256,5 +294,20 @@ class TestPersistence < FlipFab::Persistence
 
   def write value
     context.feature_states[feature_name] = value
+  end
+end
+
+class TestMultiplePersistence < FlipFab::Persistence
+
+  def initialize feature_name, context
+    super
+  end
+
+  def read
+    context.feature_states[:different_example_feature]
+  end
+
+  def write value
+    context.feature_states[:different_example_feature] = value
   end
 end
