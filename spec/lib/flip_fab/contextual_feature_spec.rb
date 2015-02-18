@@ -84,16 +84,52 @@ module FlipFab
         context 'and the persistence adapter has the same state' do
           let(:feature_states) {{ example_feature: :enabled }}
 
+          it 'does not change the state of the feature' do
+            expect{subject.enable}.not_to change{subject.enabled?}.from(true)
+          end
         end
 
         context 'and the persistence adapter has the opposite state' do
           let(:feature_states) {{ example_feature: :disabled }}
 
+          it 'changes the state of the feature' do
+            expect{subject.enable}.to change{subject.enabled?}.from(false).to(true)
+          end
+
+          it 'persists the state in the adapter' do
+            expect_any_instance_of(TestPersistence).to receive(:write).with(:enabled)
+            subject.enable
+          end
         end
 
         context 'and the persistence adapter has no state' do
           let(:feature_states) {{ }}
 
+          context 'and the feature is disabled' do
+            let(:default) { :disabled }
+
+            it 'changes the state of the feature' do
+              expect{subject.enable}.to change{subject.enabled?}.from(false).to(true)
+            end
+
+            it 'persists the state in the adapter' do
+              expect_any_instance_of(TestPersistence).to receive(:write).with(:enabled)
+              subject.enable
+            end
+          end
+
+          context 'and the feature is enabled' do
+            let(:default) { :enabled }
+
+            it 'does not change the state of the feature' do
+              expect{subject.enable}.not_to change{subject.enabled?}.from(true)
+            end
+
+            it 'persists the state in the adapter' do
+              expect_any_instance_of(TestPersistence).to receive(:write).with(:enabled)
+              subject.enable
+            end
+          end
         end
 
         context 'when there is not a persistence adapter' do
@@ -112,6 +148,85 @@ module FlipFab
 
             it 'changes the state of the feature' do
               expect{subject.enable}.to change{subject.enabled?}.from(false).to(true)
+            end
+          end
+        end
+      end
+    end
+
+
+    describe '#disable' do
+
+      context 'when there is a persistence adapter' do
+        let(:persistence_adapters) { [TestPersistence] }
+
+        context 'and the persistence adapter has the same state' do
+          let(:feature_states) {{ example_feature: :disabled }}
+
+          it 'does not change the state of the feature' do
+            expect{subject.disable}.not_to change{subject.disabled?}.from(true)
+          end
+        end
+
+        context 'and the persistence adapter has the opposite state' do
+          let(:feature_states) {{ example_feature: :enabled }}
+
+          it 'changes the state of the feature' do
+            expect{subject.disable}.to change{subject.disabled?}.from(false).to(true)
+          end
+
+          it 'persists the state in the adapter' do
+            expect_any_instance_of(TestPersistence).to receive(:write).with(:disabled)
+            subject.disable
+          end
+        end
+
+        context 'and the persistence adapter has no state' do
+          let(:feature_states) {{ }}
+
+          context 'and the feature is enabled' do
+            let(:default) { :enabled }
+
+            it 'changes the state of the feature' do
+              expect{subject.disable}.to change{subject.disabled?}.from(false).to(true)
+            end
+
+            it 'persists the state in the adapter' do
+              expect_any_instance_of(TestPersistence).to receive(:write).with(:disabled)
+              subject.disable
+            end
+          end
+
+          context 'and the feature is disabled' do
+            let(:default) { :disabled }
+
+            it 'does not change the state of the feature' do
+              expect{subject.disable}.not_to change{subject.disabled?}.from(true)
+            end
+
+            it 'persists the state in the adapter' do
+              expect_any_instance_of(TestPersistence).to receive(:write).with(:disabled)
+              subject.disable
+            end
+          end
+        end
+
+        context 'when there is not a persistence adapter' do
+          let(:persistence_adapters) { [] }
+
+          context 'and the feature is disabled' do
+            let(:default) { :disabled }
+
+            it 'does not change the state of the feature' do
+              expect{subject.disable}.not_to change{subject.disabled?}.from(true)
+            end
+          end
+
+          context 'and the feature is enabled' do
+            let(:default) { :enabled }
+
+            it 'changes the state of the feature' do
+              expect{subject.disable}.to change{subject.disabled?}.from(false).to(true)
             end
           end
         end

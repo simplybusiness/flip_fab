@@ -15,20 +15,28 @@ module FlipFab
       !enabled?
     end
 
-    def enable; end
+    def enable
+      @state = :enabled
+      persist
+    end
 
-    def disable; end
+    def disable
+      @state = :disabled
+      persist
+    end
 
-    def persist; end
+    def persist
+      persistence_adapters.each{ |adapter| adapter.write state }
+    end
 
     private
 
     def persistence_adapters
-      feature.persistence_adapters.map { |adapter_class| adapter_class.new feature.name, context }
+      @persistence_adapters ||= feature.persistence_adapters.map { |adapter_class| adapter_class.new feature.name, context }
     end
 
     def state
-      if in_context?
+      @state ||= if in_context?
         state_from_context
       else
         default_state
