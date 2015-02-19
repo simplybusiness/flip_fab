@@ -13,6 +13,10 @@ describe FlipFab do
     expect(described_class.features[name].enabled?).to eq(enabled_or_disabled == 'enabled')
   end
 
+  it 'initializes features' do
+    expect(described_class.features).to be_a FlipFab::FeaturesByName
+  end
+
   context '.define_feature' do
     subject{ described_class.define_feature name }
     after{ described_class.features.clear }
