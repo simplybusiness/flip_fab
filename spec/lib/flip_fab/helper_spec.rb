@@ -1,6 +1,6 @@
 module FlipFab
   describe Helper do
-    after  { FlipFab.features.clear unless FlipFab.features.nil?  }
+    after  { FlipFab.features.clear  }
 
     it 'runs the feature' do
       feature
@@ -36,6 +36,10 @@ module FlipFab
 
       it 'maps the features to contextual features by feature name' do
         expect(subject[:example_feature]).to be_a ContextualFeature
+      end
+
+      it 'is a FeaturesByName' do
+        expect(subject).to be_a FeaturesByName
       end
 
       context 'passing the context to the feature' do

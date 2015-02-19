@@ -1,6 +1,7 @@
 require 'flip_fab/contextual_feature'
-require 'flip_fab/helper'
+require 'flip_fab/features_by_name'
 require 'flip_fab/feature'
+require 'flip_fab/helper'
 require 'flip_fab/persistence'
 require 'flip_fab/cookie_persistence'
 
@@ -13,6 +14,8 @@ module FlipFab
     @features ||= {}
     @features[name] = Feature.new name, options
   end
+
+  @features ||= FeaturesByName.new
 end
 
 if defined?(ActionController)
