@@ -8,7 +8,7 @@ class TestPersistence < FlipFab::Persistence
     context.feature_states[feature_name]
   end
 
-  def write value
-    context.feature_states[feature_name] = value
+  def write state
+    context.feature_states[feature_name] = state
   end
 end

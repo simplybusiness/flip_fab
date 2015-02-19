@@ -12,7 +12,7 @@ module FlipFab
       raise NotImplementedError
     end
 
-    def write value
+    def write state
       raise NotImplementedError
     end
   end
