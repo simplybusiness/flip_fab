@@ -52,7 +52,7 @@ features[:name_of_feature].disable # Disable the feature for the user
 features[:name_of_feature].disabled? # => true
 ```
 
-* If the feature is not defined, `features[:name_of_feature]` will return `nil`
+* If the feature is not defined, `features[:name_of_feature]` will raise an error
 * The enabled/disabled feature will be stored in the user's cookie
 
 ### Outside of a controller
