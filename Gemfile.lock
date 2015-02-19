@@ -54,6 +54,7 @@ GEM
     pry-stack_explorer (0.4.9.1)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
+    rack (1.6.0)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -69,6 +70,7 @@ GEM
     rutabaga (0.1.1)
       turnip (>= 1.1.0, < 2.0)
     slop (3.6.0)
+    timecop (0.7.1)
     turnip (1.2.4)
       gherkin (>= 2.5)
       rspec (>= 2.14.0, < 4.0)
@@ -80,5 +82,7 @@ PLATFORMS
 DEPENDENCIES
   flip_fab!
   pry-plus
+  rack
   rspec
   rutabaga
+  timecop

@@ -95,6 +95,26 @@ FlipFab.features[:name_of_feature].disabled? # => true
 1. Cookie
 1. Default
 
+## Cookie persistence
+
+Out of the box, the features a user receives can be persisted in their cookie. The cookie will have the following parameters:
+
+| Parameter | Value |
+| --------- | ----- |
+| Name      | `flip_fab.[name of feature]` |
+| Value     | `enabled|disabled` |
+| Path      | `/` |
+| Expires   | One year from now |
+| Domain    | The top-level domain |
+
+To persist the features in a user's cookie, do any of the following operations
+
+```ruby
+features[:name_of_feature].enable # Enable the feature for the user
+features[:name_of_feature].disable # Disable the feature for the user
+features[:name_of_feature].persist # Persist the feature for the user
+```
+
 ## Defining a custom persistence adapter
 
 1. Create a class that extends the `FlipFab::Persistence` class

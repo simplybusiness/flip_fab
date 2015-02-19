@@ -6,7 +6,7 @@ module FlipFab
     def initialize name, options
       @name                 = name
       @default              = options[:default] || :disabled
-      @persistence_adapters = options[:persistence_adapters] || []
+      @persistence_adapters = options[:persistence_adapters] || [CookiePersistence]
     end
 
     def enabled?
