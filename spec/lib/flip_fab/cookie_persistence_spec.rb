@@ -6,7 +6,7 @@ module FlipFab
     let(:cookies) { }
     let(:context) { TestRackContext.new cookies, 'simplybusiness.co.uk' }
     before { FlipFab.define_feature :example_feature }
-    after  { FlipFab.features.clear unless FlipFab.features.nil?  }
+    after  { FlipFab.features.clear }
     subject{ described_class.new :example_feature, context }
 
     it 'runs the feature' do
