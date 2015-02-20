@@ -5,8 +5,8 @@ module FlipFab
     let(:persistence_adapters) { [TestPersistence] }
     let(:feature)              { Feature.new :example_feature, { default: default, persistence_adapters: persistence_adapters } }
     let(:feature_states)       {{ example_feature: :enabled }}
-    let(:context)              { TestContext.new feature_states }
-    subject{ described_class.new feature, context, override }
+    let(:context)              { TestContext.new feature_states, { 'example_feature' => override } }
+    subject{ described_class.new feature, context }
 
     describe '.new' do
 

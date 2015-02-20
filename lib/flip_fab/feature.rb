@@ -3,7 +3,7 @@ module FlipFab
 
     attr_reader :name, :default, :persistence_adapters
 
-    def initialize name, options
+    def initialize name, options={}
       @name                 = name
       @default              = options[:default] || :disabled
       @persistence_adapters = options[:persistence_adapters] || []
@@ -15,6 +15,10 @@ module FlipFab
 
     def disabled?
       !enabled?
+    end
+
+    def with_context context
+      ContextualFeature.new self, context
     end
   end
 end

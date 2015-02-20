@@ -28,9 +28,18 @@ module FlipFab
       end
     end
 
+    step 'I override the state in the URL parameters with :overriden_state' do |overriden_state|
+      get "/?example_feature=#{overriden_state}"
+    end
+
+    step 'the feature is :state for the user' do |state|
+
+    end
+
     describe '#features' do
+      let(:params)         {{}}
       let(:feature_states) {{ example_feature: :enabled }}
-      let(:context)        { (TestContext.new feature_states) }
+      let(:context)        { (TestContext.new feature_states, params) }
       before { FlipFab.define_feature :example_feature, { persistence_adapters: [TestPersistence] } }
       subject { context.features }
 
@@ -40,6 +49,18 @@ module FlipFab
 
       it 'is a FeaturesByName' do
         expect(subject).to be_a FeaturesByName
+      end
+
+      context 'when the feature is overridden in the params' do
+        let(:params) {{'example_feature' => 'disabled'}}
+
+        it 'applies the override to the feature' do
+          expect(subject[:example_feature].disabled?).to be_truthy
+        end
+
+        it 'prevents the feature\'s state from being changed' do
+          expect{ subject[:example_feature].enable }.not_to change{ subject[:example_feature].enabled? }.from(false)
+        end
       end
 
       context 'passing the context to the feature' do

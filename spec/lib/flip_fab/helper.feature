@@ -13,3 +13,21 @@ Feature: Feature flipping in the context of a request, session, etc.
       | default_state |
       |       enabled |
       |      disabled |
+
+  Scenario Outline: A feature's state can be set in the URL parameters and remains in that state for that user
+    Given there is a feature with a default state of '<default_state>'
+     When I override the state in the URL parameters with '<overridden_state>'
+     Then the feature is '<overridden_state>' for the user
+     When I 'enable' the feature for the user
+     Then the feature is '<overridden_state>' for the user
+     When I 'disable' the feature for the user
+     Then the feature is '<overridden_state>' for the user
+     When I request the page again
+     Then the feature is '<overridden_state>' for the user
+
+    Examples:
+      | default_state | overridden_state |
+      |       enabled |          enabled |
+      |      disabled |         disabled |
+      |       enabled |         disabled |
+      |      disabled |          enabled |

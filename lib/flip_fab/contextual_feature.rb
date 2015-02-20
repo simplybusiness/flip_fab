@@ -1,11 +1,10 @@
 module FlipFab
   class ContextualFeature
-    attr_reader :feature, :context, :override
+    attr_reader :feature, :context
 
-    def initialize feature, context, override=nil
-      @feature  = feature
-      @context  = context
-      @override = override
+    def initialize feature, context
+      @feature = feature
+      @context = context
       if overridden?
         @state = override
         persist
@@ -38,10 +37,6 @@ module FlipFab
       persistence_adapters.each{ |adapter| adapter.write state }
     end
 
-    def overridden?
-      !override.nil?
-    end
-
     private
 
     def persistence_adapters
@@ -49,14 +44,14 @@ module FlipFab
     end
 
     def state
-      @state ||= if in_context?
+      @state ||= if state_in_context?
         state_from_context
       else
         default_state
       end
     end
 
-    def in_context?
+    def state_in_context?
       !first_adapter_with_state.nil?
     end
 
@@ -70,6 +65,17 @@ module FlipFab
 
     def default_state
       feature.default
+    end
+
+    def override
+      return unless context.respond_to? :params
+      override = context.params[feature.name.to_s]
+      return if override.nil?
+      override.to_sym
+    end
+
+    def overridden?
+      !override.nil?
     end
 
     def unless_overridden &block
