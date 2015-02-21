@@ -1,5 +1,9 @@
+require 'rack/test'
+
 module FlipFab
   describe Helper do
+    include Rack::Test::Methods
+    let(:app) { TestApp.new }
     after  { FlipFab.features.clear  }
 
     it 'runs the feature' do
@@ -21,11 +25,11 @@ module FlipFab
     end
 
     step 'I :enable_or_disable the feature in the first context' do |enable_or_disable|
-      if enable_or_disable == 'enable'
-        @first_context.features[:example_feature].enable
-      else
-        @first_context.features[:example_feature].disable
-      end
+      @first_context.features[:example_feature].send(enable_or_disable.to_sym)
+    end
+
+    step 'there is a feature with a default state of :default_state with cookie persistence' do |default_state|
+      FlipFab.define_feature :example_feature, { default: default_state.to_sym }
     end
 
     step 'I override the state in the URL parameters with :overriden_state' do |overriden_state|
@@ -33,7 +37,11 @@ module FlipFab
     end
 
     step 'the feature is :state for the user' do |state|
+      expect(app.contextual_features[:example_feature].enabled?).to eq(state=='enabled')
+    end
 
+    step 'I :enable_or_disable the feature for the user' do |enable_or_disable|
+      app.contextual_features[:example_feature].send(enable_or_disable.to_sym)
     end
 
     describe '#features' do

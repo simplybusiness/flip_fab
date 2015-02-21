@@ -19,10 +19,18 @@ module FlipFab
       end
 
       context 'when the feature has been overriden' do
-        let(:override) { :disabled }
+        let(:override) { 'disabled' }
 
         it 'persists the override' do
           expect{ subject }.to change{ feature_states }.from({ example_feature: :enabled }).to({ example_feature: :disabled })
+        end
+
+        context 'when the override provided in not one of enabled or disabled, it does not persist the override' do
+          let(:override) { '' }
+
+          it 'does not persist the override' do
+            expect{ subject }.not_to change{ feature_states }.from({ example_feature: :enabled })
+          end
         end
       end
     end
@@ -37,7 +45,7 @@ module FlipFab
         end
 
         context 'when the feature has been overridden' do
-          let(:override) { :disabled }
+          let(:override) { 'disabled' }
 
           it 'returns false' do
             expect(subject.enabled?).to be_falsey
@@ -124,7 +132,7 @@ module FlipFab
     describe '#enable' do
 
       context 'when the state has been overridden' do
-        let(:override) { :disabled }
+        let(:override) { 'disabled' }
 
         context 'and the persistence adapter has the opposite state' do
           let(:feature_states) {{ example_feature: :disabled }}
@@ -230,7 +238,7 @@ module FlipFab
     describe '#disable' do
 
       context 'when the state has been overridden' do
-        let(:override) { :enabled }
+        let(:override) { 'enabled' }
 
         context 'and the persistence adapter has the opposite state' do
           let(:feature_states) {{ example_feature: :enabled }}

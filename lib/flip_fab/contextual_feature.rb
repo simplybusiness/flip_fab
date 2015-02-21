@@ -70,7 +70,7 @@ module FlipFab
     def override
       return unless context.respond_to? :params
       override = context.params[feature.name.to_s]
-      return if override.nil?
+      return unless %w(enabled disabled).include? override
       override.to_sym
     end
 
