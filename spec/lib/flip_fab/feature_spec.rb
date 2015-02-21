@@ -29,8 +29,8 @@ module FlipFab
       context 'when the persistence adapters are not provided' do
         let(:options) { {} }
 
-        it 'assigns an empty list of adapters' do
-          expect(subject.persistence_adapters).to eq([])
+        it 'uses a cookie adapter' do
+          expect(subject.persistence_adapters).to eq([CookiePersistence])
         end
       end
     end
