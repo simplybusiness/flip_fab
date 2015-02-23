@@ -1,3 +1,5 @@
+-r rutabaga
+--order rand
 --color
 --require spec_helper
---format=doc
+--format doc
