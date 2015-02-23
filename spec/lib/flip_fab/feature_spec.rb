@@ -72,5 +72,15 @@ module FlipFab
         end
       end
     end
+
+    describe '#with_context' do
+      let(:context) { double(:context) }
+
+      it 'returns a contextual feature' do
+        expect(subject.with_context context).to be_a ContextualFeature
+        expect((subject.with_context context).feature).to eq(subject)
+        expect((subject.with_context context).context).to eq(context)
+      end
+    end
   end
 end
