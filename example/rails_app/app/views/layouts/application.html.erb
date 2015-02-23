@@ -7,7 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<% if features[:justin_beaver].enabled? %>
+  <%= image_tag 'justin_beaver.jpg', width: 200, height: 200 %>
+<% else %>
+  <%= image_tag 'regular_beaver.jpg', width: 200, height: 200 %>
+<% end %>
 <%= yield %>
 
 </body>
