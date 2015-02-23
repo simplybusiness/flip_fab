@@ -151,3 +151,17 @@ features[:name_of_feature].persist # Persist the feature for the user
   ```
 
 Note that you can define multiple custom adapters that will be read in precedence of the order specified
+
+## Example app
+
+There is an example app that demonstrates the use of FlipFlab in `example/rails_app`. The app has a feature called `:justin_beaver` that allows you to flip the image on the page between a beaver and a 'justin beaver'.
+
+
+Perform the following to try the example:
+
+1. Go into the app: `cd example/rails_app`
+1. Install the gems: `bundle install`
+1. Run the migrations: `bundle exec rake db:migrate`
+1. Start rails: `bundle exec rails s`
+1. View the page with the feature disabled: `open 'http://localhost:3000/beavers?justin_beaver=disabled'`
+1. View the page with the feature enabled: `open 'http://localhost:3000/beavers?justin_beaver=enabled'`
