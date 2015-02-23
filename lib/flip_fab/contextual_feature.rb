@@ -20,14 +20,14 @@ module FlipFab
     end
 
     def enable
-      unless_overridden do
+      unless overridden?
         @state = :enabled
         persist
       end
     end
 
     def disable
-      unless_overridden do
+      unless overridden?
         @state = :disabled
         persist
       end
@@ -76,10 +76,6 @@ module FlipFab
 
     def overridden?
       !override.nil?
-    end
-
-    def unless_overridden &block
-      block.call unless overridden?
     end
   end
 end
