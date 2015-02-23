@@ -8,6 +8,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rack'
+  gem 'rack-test'
   gem 'rspec'
   gem 'rutabaga'
+  gem 'timecop'
 end

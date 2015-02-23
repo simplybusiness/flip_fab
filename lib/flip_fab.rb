@@ -3,6 +3,7 @@ require 'flip_fab/features_by_name'
 require 'flip_fab/feature'
 require 'flip_fab/helper'
 require 'flip_fab/persistence'
+require 'flip_fab/cookie_persistence'
 
 module FlipFab
   extend self
