@@ -129,6 +129,25 @@ module FlipFab
       end
     end
 
+    describe '#state=' do
+
+      context 'when the provided value is not :enabled or :disabled' do
+
+        it 'raises' do
+          expect{ subject.state = '' }.to raise_error 'Invalid state provided: ``, possible states are :enabled, :disabled'
+          expect{ subject.state = 'enabled' }.to raise_error 'Invalid state provided: `enabled`, possible states are :enabled, :disabled'
+        end
+      end
+
+      context 'when the provided value is :enabled or :disabled' do
+
+        it 'changes the state of the feature' do
+          expect{ subject.state = :disabled }.to change{subject.enabled?}.from(true).to(false)
+          expect{ subject.state = :enabled }.to change{subject.enabled?}.from(false).to(true)
+        end
+      end
+    end
+
     describe '#enable' do
 
       context 'when the state has been overridden' do
