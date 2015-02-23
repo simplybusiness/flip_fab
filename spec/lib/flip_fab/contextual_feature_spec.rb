@@ -18,14 +18,14 @@ module FlipFab
         expect(subject.context).to eq(context)
       end
 
-      context 'when the feature has been overriden' do
+      context 'when the feature has been overridden' do
         let(:override) { 'disabled' }
 
         it 'persists the override' do
           expect{ subject }.to change{ feature_states }.from({ example_feature: :enabled }).to({ example_feature: :disabled })
         end
 
-        context 'when the override provided in not one of enabled or disabled, it does not persist the override' do
+        context 'when the override provided is not one of enabled or disabled, it does not persist the override' do
           let(:override) { '' }
 
           it 'does not persist the override' do

@@ -32,8 +32,8 @@ module FlipFab
       FlipFab.define_feature :example_feature, { default: default_state.to_sym }
     end
 
-    step 'I override the state in the URL parameters with :overriden_state' do |overriden_state|
-      get "/?example_feature=#{overriden_state}"
+    step 'I override the state in the URL parameters with :overridden_state' do |overridden_state|
+      get "/?example_feature=#{overridden_state}"
     end
 
     step 'the feature is :state for the user' do |state|
