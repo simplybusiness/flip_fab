@@ -5,6 +5,10 @@ module FlipFab
     def initialize feature, context
       @feature = feature
       @context = context
+      if overridden?
+        @state = override
+        persist
+      end
     end
 
     def enabled?
@@ -16,13 +20,17 @@ module FlipFab
     end
 
     def enable
-      @state = :enabled
-      persist
+      unless overridden?
+        @state = :enabled
+        persist
+      end
     end
 
     def disable
-      @state = :disabled
-      persist
+      unless overridden?
+        @state = :disabled
+        persist
+      end
     end
 
     def persist
@@ -36,14 +44,14 @@ module FlipFab
     end
 
     def state
-      @state ||= if in_context?
+      @state ||= if state_in_context?
         state_from_context
       else
         default_state
       end
     end
 
-    def in_context?
+    def state_in_context?
       !first_adapter_with_state.nil?
     end
 
@@ -57,6 +65,17 @@ module FlipFab
 
     def default_state
       feature.default
+    end
+
+    def override
+      return unless context.respond_to? :params
+      override = context.params[feature.name.to_s]
+      return unless %w(enabled disabled).include? override
+      override.to_sym
+    end
+
+    def overridden?
+      !override.nil?
     end
   end
 end

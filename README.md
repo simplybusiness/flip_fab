@@ -61,11 +61,15 @@ Outside of a controller, features cannot be enabled/disabled for individual user
 
 ### From URL params
 
+You can explicitely request a feature to be enabled or disabled in your session by passing the desired state of a feature in the parameters of your request:
+
 `http://localhost:3000?name_of_feature=enabled&name_of_other_feature=disabled`
 
 * The features' states specified in the URL will take precendence over those specified in the controller
 * The enabled/disabled features will be stored in the user's cookie
 * Smoke tests could enable or disable features using this mechanism
+
+_Note: This will enable users of a production system to show/hide features in their session. While this allows automated tests to be run against staging/production environment against a particular set of features, this will allow users to 'customize' their experience, so consider what types of features a user could be switching on and off i.e. authentication, security, etc._
 
 ## Checking if a feature is enabled
 

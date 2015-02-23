@@ -1,10 +1,11 @@
 module FlipFab
   describe ContextualFeature do
+    let(:override)             {  }
     let(:default)              { :disabled }
     let(:persistence_adapters) { [TestPersistence] }
     let(:feature)              { Feature.new :example_feature, { default: default, persistence_adapters: persistence_adapters } }
     let(:feature_states)       {{ example_feature: :enabled }}
-    let(:context)              { TestContext.new feature_states }
+    let(:context)              { TestContext.new feature_states, { 'example_feature' => override } }
     subject{ described_class.new feature, context }
 
     describe '.new' do
@@ -16,6 +17,22 @@ module FlipFab
       it 'assigns the context' do
         expect(subject.context).to eq(context)
       end
+
+      context 'when the feature has been overridden' do
+        let(:override) { 'disabled' }
+
+        it 'persists the override' do
+          expect{ subject }.to change{ feature_states }.from({ example_feature: :enabled }).to({ example_feature: :disabled })
+        end
+
+        context 'when the override provided is not one of enabled or disabled, it does not persist the override' do
+          let(:override) { '' }
+
+          it 'does not persist the override' do
+            expect{ subject }.not_to change{ feature_states }.from({ example_feature: :enabled })
+          end
+        end
+      end
     end
 
     describe '#enabled?' do
@@ -25,6 +42,14 @@ module FlipFab
 
         it 'returns true' do
           expect(subject.enabled?).to be_truthy
+        end
+
+        context 'when the feature has been overridden' do
+          let(:override) { 'disabled' }
+
+          it 'returns false' do
+            expect(subject.enabled?).to be_falsey
+          end
         end
       end
 
@@ -105,6 +130,23 @@ module FlipFab
     end
 
     describe '#enable' do
+
+      context 'when the state has been overridden' do
+        let(:override) { 'disabled' }
+
+        context 'and the persistence adapter has the opposite state' do
+          let(:feature_states) {{ example_feature: :disabled }}
+
+          it 'does not change the state of the feature' do
+            expect{subject.enable}.not_to change{subject.enabled?}.from(false)
+          end
+
+          it 'does not persist the state in the adapter' do
+            expect_any_instance_of(TestPersistence).not_to receive(:write).with(:enabled)
+            subject.enable
+          end
+        end
+      end
 
       context 'when there are multiple persistence adapters' do
         let(:persistence_adapters) { [TestPersistence, TestMultiplePersistence] }
@@ -194,6 +236,23 @@ module FlipFab
 
 
     describe '#disable' do
+
+      context 'when the state has been overridden' do
+        let(:override) { 'enabled' }
+
+        context 'and the persistence adapter has the opposite state' do
+          let(:feature_states) {{ example_feature: :enabled }}
+
+          it 'does not change the state of the feature' do
+            expect{subject.disable}.not_to change{subject.disabled?}.from(false)
+          end
+
+          it 'does not persist the state in the adapter' do
+            expect_any_instance_of(TestPersistence).not_to receive(:write).with(:disabled)
+            subject.disable
+          end
+        end
+      end
 
       context 'when there is a persistence adapter' do
         let(:persistence_adapters) { [TestPersistence] }
