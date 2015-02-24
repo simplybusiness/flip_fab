@@ -16,7 +16,7 @@ This allows you to...
 Add the following to your `Gemfile`
 
 ```ruby
-gem 'flip_fab', git: 'git@github.com:simplybusiness/flip_fab.git'
+gem 'flip_fab'
 ```
 
 ### Rails
