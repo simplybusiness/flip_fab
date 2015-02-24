@@ -20,15 +20,17 @@ module FlipFab
     end
 
     def enable
-      unless overridden?
-        @state = :enabled
-        persist
-      end
+      self.state = :enabled
     end
 
     def disable
+      self.state = :disabled
+    end
+
+    def state= value
+      raise "Invalid state provided: `#{value}`, possible states are :enabled, :disabled" unless %i(enabled disabled).include? value
       unless overridden?
-        @state = :disabled
+        @state = value
         persist
       end
     end
