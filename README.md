@@ -96,6 +96,7 @@ FlipFab.features[:name_of_feature].disabled? # => true
 ### Precedence of feature lookup
 
 1. URL parameter
+1. Code (e.g. `features[:name_of_feature].enable`)
 1. Cookie
 1. Default
 
