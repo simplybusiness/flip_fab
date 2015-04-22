@@ -1,7 +1,7 @@
 PATH
   remote: ../../
   specs:
-    flip_fab (0.0.1)
+    flip_fab (1.0.0)
 
 GEM
   remote: https://rubygems.org/
