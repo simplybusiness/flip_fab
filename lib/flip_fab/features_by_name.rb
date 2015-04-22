@@ -17,6 +17,6 @@ module FlipFab
       FeaturesByName.new Hash[@features_by_name.map{|name, feature| [name, (feature.with_context context)]}]
     end
 
-    def_delegators :@features_by_name, :[]=, :clear, :count
+    def_delegators :@features_by_name, :[]=, :clear, :count, :each
   end
 end
