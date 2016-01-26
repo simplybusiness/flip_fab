@@ -46,11 +46,7 @@ module FlipFab
     end
 
     def state
-      @state ||= if state_in_context?
-        state_from_context
-      else
-        default_state
-      end
+      @state ||= state_in_context? ? state_from_context : default_state
     end
 
     def state_in_context?
