@@ -6,3 +6,7 @@ AllCops:
 
 Lint/EndAlignment:
   Enabled: true
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'lib/flip_fab/persistence.rb'
