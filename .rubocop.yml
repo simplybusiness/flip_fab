@@ -1,0 +1,15 @@
+# TODO: finish porting rules from .rubocop_todo.yml to this file
+
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+
+Lint/EndAlignment:
+  Enabled: true
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'lib/flip_fab/persistence.rb'
+
