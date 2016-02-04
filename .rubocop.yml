@@ -1,3 +1,5 @@
+# TODO: finish porting rules from .rubocop_todo.yml to this file
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
@@ -10,3 +12,4 @@ Lint/EndAlignment:
 Lint/UnusedMethodArgument:
   Exclude:
     - 'lib/flip_fab/persistence.rb'
+
