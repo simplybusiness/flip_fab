@@ -6,42 +6,40 @@ module FlipFab
     let(:app) { TestApp.new }
     after  { FlipFab.features.clear  }
 
-    it 'runs the feature' do
-      feature
-    end
+    feature do
+      step 'there is a feature with a default state of :default_state' do |default_state|
+        FlipFab.define_feature :example_feature, { default: default_state.to_sym, persistence_adapters: [TestPersistence] }
+      end
 
-    step 'there is a feature with a default state of :default_state' do |default_state|
-      FlipFab.define_feature :example_feature, { default: default_state.to_sym, persistence_adapters: [TestPersistence] }
-    end
+      step 'there are two contexts' do
+        @first_context  = TestContext.new
+        @second_context = TestContext.new
+      end
 
-    step 'there are two contexts' do
-      @first_context  = TestContext.new
-      @second_context = TestContext.new
-    end
+      step 'the feature is :expected_state_in_first_context in the first context, :expected_state_in_second_context in the second context' do |expected_state_in_first_context, expected_state_in_second_context|
+        expect(@first_context.features[:example_feature].enabled?).to eq(expected_state_in_first_context == 'enabled')
+        expect(@second_context.features[:example_feature].enabled?).to eq(expected_state_in_second_context == 'enabled')
+      end
 
-    step 'the feature is :expected_state_in_first_context in the first context, :expected_state_in_second_context in the second context' do |expected_state_in_first_context, expected_state_in_second_context|
-      expect(@first_context.features[:example_feature].enabled?).to eq(expected_state_in_first_context == 'enabled')
-      expect(@second_context.features[:example_feature].enabled?).to eq(expected_state_in_second_context == 'enabled')
-    end
+      step 'I :enable_or_disable the feature in the first context' do |enable_or_disable|
+        @first_context.features[:example_feature].send(enable_or_disable.to_sym)
+      end
 
-    step 'I :enable_or_disable the feature in the first context' do |enable_or_disable|
-      @first_context.features[:example_feature].send(enable_or_disable.to_sym)
-    end
+      step 'there is a feature with a default state of :default_state with cookie persistence' do |default_state|
+        FlipFab.define_feature :example_feature, { default: default_state.to_sym }
+      end
 
-    step 'there is a feature with a default state of :default_state with cookie persistence' do |default_state|
-      FlipFab.define_feature :example_feature, { default: default_state.to_sym }
-    end
+      step 'I override the state in the URL parameters with :overridden_state' do |overridden_state|
+        get "/?example_feature=#{overridden_state}"
+      end
 
-    step 'I override the state in the URL parameters with :overridden_state' do |overridden_state|
-      get "/?example_feature=#{overridden_state}"
-    end
+      step 'the feature is :state for the user' do |state|
+        expect(app.contextual_features[:example_feature].enabled?).to eq(state=='enabled')
+      end
 
-    step 'the feature is :state for the user' do |state|
-      expect(app.contextual_features[:example_feature].enabled?).to eq(state=='enabled')
-    end
-
-    step 'I :enable_or_disable the feature for the user' do |enable_or_disable|
-      app.contextual_features[:example_feature].send(enable_or_disable.to_sym)
+      step 'I :enable_or_disable the feature for the user' do |enable_or_disable|
+        app.contextual_features[:example_feature].send(enable_or_disable.to_sym)
+      end
     end
 
     describe '#features' do

@@ -1,16 +1,14 @@
 describe FlipFab do
   let(:name) { :example_feature }
 
-  it 'runs the feature' do
-    feature
-  end
+  feature do
+    step 'I define a feature that is :enabled_or_disabled' do |enabled_or_disabled|
+      described_class.define_feature name, { default: enabled_or_disabled.to_sym }
+    end
 
-  step 'I define a feature that is :enabled_or_disabled' do |enabled_or_disabled|
-    described_class.define_feature name, { default: enabled_or_disabled.to_sym }
-  end
-
-  step 'the feature is :enabled_or_disabled' do |enabled_or_disabled|
-    expect(described_class.features[name].enabled?).to eq(enabled_or_disabled == 'enabled')
+    step 'the feature is :enabled_or_disabled' do |enabled_or_disabled|
+      expect(described_class.features[name].enabled?).to eq(enabled_or_disabled == 'enabled')
+    end
   end
 
   it 'initializes features' do
