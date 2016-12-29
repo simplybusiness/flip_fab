@@ -15,5 +15,5 @@ gem 'jquery-rails'
 
 gem 'flip_fab', path: '../../'
 
-gem 'rspec-rails', group: :test
 gem 'rails-controller-testing', group: :test
+gem 'rspec-rails', group: :test

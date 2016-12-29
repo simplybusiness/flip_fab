@@ -5,18 +5,18 @@ class BeaversControllerTest < ActionController::TestCase
     @beaver = beavers(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:beavers)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create beaver" do
+  test 'should create beaver' do
     assert_difference('Beaver.count') do
       post :create, params: { beaver: { name: @beaver.name } }
     end
@@ -24,22 +24,22 @@ class BeaversControllerTest < ActionController::TestCase
     assert_redirected_to beaver_path(assigns(:beaver))
   end
 
-  test "should show beaver" do
+  test 'should show beaver' do
     get :show, params: { id: @beaver }
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, params: { id: @beaver }
     assert_response :success
   end
 
-  test "should update beaver" do
+  test 'should update beaver' do
     patch :update, params: { id: @beaver, beaver: { name: @beaver.name } }
     assert_redirected_to beaver_path(assigns(:beaver))
   end
 
-  test "should destroy beaver" do
+  test 'should destroy beaver' do
     assert_difference('Beaver.count', -1) do
       delete :destroy, params: { id: @beaver }
     end

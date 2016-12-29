@@ -1,11 +1,10 @@
 module FlipFab
   describe Feature do
     let(:name) { :example_test }
-    let(:options) {{ default: :enabled, persistence_adapters: [] }}
+    let(:options) { { default: :enabled, persistence_adapters: [] } }
     subject { described_class.new name, options }
 
     describe '.new' do
-
       it 'assigns the name' do
         expect(subject.name).to eq(:example_test)
       end
@@ -36,9 +35,8 @@ module FlipFab
     end
 
     describe '#enabled?' do
-
       context 'when the feature is enabled' do
-        let(:options) {{ default: :enabled, persistence_adapters: [] }}
+        let(:options) { { default: :enabled, persistence_adapters: [] } }
 
         it 'returns true' do
           expect(subject.enabled?).to be_truthy
@@ -46,7 +44,7 @@ module FlipFab
       end
 
       context 'when the feature is disabled' do
-        let(:options) {{ default: :disabled, persistence_adapters: [] }}
+        let(:options) { { default: :disabled, persistence_adapters: [] } }
 
         it 'returns false' do
           expect(subject.enabled?).to be_falsey
@@ -55,9 +53,8 @@ module FlipFab
     end
 
     describe '#disabled?' do
-
       context 'when the feature is disabled' do
-        let(:options) {{ default: :disabled, persistence_adapters: [] }}
+        let(:options) { { default: :disabled, persistence_adapters: [] } }
 
         it 'returns true' do
           expect(subject.disabled?).to be_truthy
@@ -65,7 +62,7 @@ module FlipFab
       end
 
       context 'when the feature is enabled' do
-        let(:options) {{ default: :enabled, persistence_adapters: [] }}
+        let(:options) { { default: :enabled, persistence_adapters: [] } }
 
         it 'returns false' do
           expect(subject.disabled?).to be_falsey
@@ -77,7 +74,7 @@ module FlipFab
       let(:context) { double(:context) }
 
       it 'returns a contextual feature' do
-        expect(subject.with_context context).to be_a ContextualFeature
+        expect(subject.with_context(context)).to be_a ContextualFeature
         expect((subject.with_context context).feature).to eq(subject)
         expect((subject.with_context context).context).to eq(context)
       end

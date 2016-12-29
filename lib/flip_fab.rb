@@ -10,7 +10,7 @@ module FlipFab
 
   attr_reader :features
 
-  def define_feature name, options={}
+  def define_feature(name, options = {})
     @features ||= {}
     @features[name] = Feature.new name, options
   end

@@ -4,11 +4,11 @@ module FlipFab
   describe Helper do
     include Rack::Test::Methods
     let(:app) { TestApp.new }
-    after  { FlipFab.features.clear  }
+    after { FlipFab.features.clear }
 
     feature do
       step 'there is a feature with a default state of :default_state' do |default_state|
-        FlipFab.define_feature :example_feature, { default: default_state.to_sym, persistence_adapters: [TestPersistence] }
+        FlipFab.define_feature :example_feature, default: default_state.to_sym, persistence_adapters: [TestPersistence]
       end
 
       step 'there are two contexts' do
@@ -26,7 +26,7 @@ module FlipFab
       end
 
       step 'there is a feature with a default state of :default_state with cookie persistence' do |default_state|
-        FlipFab.define_feature :example_feature, { default: default_state.to_sym }
+        FlipFab.define_feature :example_feature, default: default_state.to_sym
       end
 
       step 'I override the state in the URL parameters with :overridden_state' do |overridden_state|
@@ -34,7 +34,7 @@ module FlipFab
       end
 
       step 'the feature is :state for the user' do |state|
-        expect(app.contextual_features[:example_feature].enabled?).to eq(state=='enabled')
+        expect(app.contextual_features[:example_feature].enabled?).to eq(state == 'enabled')
       end
 
       step 'I :enable_or_disable the feature for the user' do |enable_or_disable|
@@ -43,10 +43,10 @@ module FlipFab
     end
 
     describe '#features' do
-      let(:params)         {{}}
-      let(:feature_states) {{ example_feature: :enabled }}
+      let(:params)         { {} }
+      let(:feature_states) { { example_feature: :enabled } }
       let(:context)        { (TestContext.new feature_states, params) }
-      before { FlipFab.define_feature :example_feature, { persistence_adapters: [TestPersistence] } }
+      before { FlipFab.define_feature :example_feature, persistence_adapters: [TestPersistence] }
       subject { context.features }
 
       it 'maps the features to contextual features by feature name' do
@@ -58,25 +58,24 @@ module FlipFab
       end
 
       context 'when the feature is overridden in the params' do
-        let(:params) {{'example_feature' => 'disabled'}}
+        let(:params) { { 'example_feature' => 'disabled' } }
 
         it 'applies the override to the feature' do
           expect(subject[:example_feature].disabled?).to be_truthy
         end
 
         it 'prevents the feature\'s state from being changed' do
-          expect{ subject[:example_feature].enable }.not_to change{ subject[:example_feature].enabled? }.from(false)
+          expect { subject[:example_feature].enable }.not_to change { subject[:example_feature].enabled? }.from(false)
         end
       end
 
       context 'passing the context to the feature' do
-
         it 'feature toggling is applied to the context' do
-          expect{ subject[:example_feature].disable }.to change{ subject[:example_feature].enabled? }.from(true).to(false)
+          expect { subject[:example_feature].disable }.to change { subject[:example_feature].enabled? }.from(true).to(false)
         end
 
         it 'feature toggling is persisted in the context' do
-          expect{ subject[:example_feature].disable }.to change{ feature_states }.from({ example_feature: :enabled }).to({ example_feature: :disabled })
+          expect { subject[:example_feature].disable }.to change { feature_states }.from(example_feature: :enabled).to(example_feature: :disabled)
         end
       end
 

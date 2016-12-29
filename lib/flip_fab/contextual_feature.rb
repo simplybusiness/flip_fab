@@ -2,7 +2,7 @@ module FlipFab
   class ContextualFeature
     attr_reader :feature, :context
 
-    def initialize feature, context
+    def initialize(feature, context)
       @feature = feature
       @context = context
       if overridden?
@@ -27,7 +27,7 @@ module FlipFab
       self.state = :disabled
     end
 
-    def state= value
+    def state=(value)
       raise "Invalid state provided: `#{value}`, possible states are :enabled, :disabled" unless %i(enabled disabled).include? value
       unless overridden?
         @state = value
@@ -36,7 +36,7 @@ module FlipFab
     end
 
     def persist
-      persistence_adapters.each{ |adapter| adapter.write state }
+      persistence_adapters.each { |adapter| adapter.write state }
     end
 
     private
@@ -58,7 +58,7 @@ module FlipFab
     end
 
     def first_adapter_with_state
-      persistence_adapters.detect{|adapter| !adapter.read.nil?}
+      persistence_adapters.detect { |adapter| !adapter.read.nil? }
     end
 
     def default_state

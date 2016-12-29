@@ -3,11 +3,11 @@ require 'timecop'
 
 module FlipFab
   describe CookiePersistence do
-    let(:cookies) { }
+    let(:cookies) {}
     let(:context) { TestRackContext.new cookies, 'simplybusiness.co.uk' }
     before { FlipFab.define_feature :example_feature }
     after  { FlipFab.features.clear }
-    subject{ described_class.new :example_feature, context }
+    subject { described_class.new :example_feature, context }
 
     feature do
       step 'the host is :host' do |host|
@@ -19,7 +19,7 @@ module FlipFab
       end
 
       step 'the time is :current_time' do |current_time|
-        Timecop.freeze(Time.parse current_time)
+        Timecop.freeze(Time.parse(current_time))
       end
 
       step 'the state of the feature is :feature_state' do |feature_state|
@@ -58,9 +58,8 @@ module FlipFab
     end
 
     describe '#read' do
-
       context 'when there is no existing cookie' do
-        let(:cookies) { }
+        let(:cookies) {}
 
         it 'returns nil' do
           expect(subject.read).to be_nil
@@ -81,7 +80,7 @@ module FlipFab
       after  { Timecop.return }
 
       it 'saves the feature state' do
-        expect{ subject.write :enabled }.to change{ context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; domain=.simplybusiness.co.uk; path=/; expires=Tue, 01 Jan 1991 00:00:00 -0000')
+        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; domain=.simplybusiness.co.uk; path=/; expires=Tue, 01 Jan 1991 00:00:00 -0000')
       end
     end
   end
