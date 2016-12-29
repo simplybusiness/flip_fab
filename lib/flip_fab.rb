@@ -6,8 +6,6 @@ require 'flip_fab/persistence'
 require 'flip_fab/cookie_persistence'
 
 module FlipFab
-  extend self
-
   attr_reader :features
 
   def define_feature(name, options = {})
@@ -16,6 +14,8 @@ module FlipFab
   end
 
   @features ||= FeaturesByName.new
+
+  module_function :features, :define_feature
 end
 
 if defined?(ActionController)

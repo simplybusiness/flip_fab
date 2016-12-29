@@ -5,10 +5,9 @@ module FlipFab
     def initialize(feature, context)
       @feature = feature
       @context = context
-      if overridden?
-        @state = override
-        persist
-      end
+      return unless overridden?
+      @state = override
+      persist
     end
 
     def enabled?
@@ -29,10 +28,9 @@ module FlipFab
 
     def state=(value)
       raise "Invalid state provided: `#{value}`, possible states are :enabled, :disabled" unless %i(enabled disabled).include? value
-      unless overridden?
-        @state = value
-        persist
-      end
+      return if overridden?
+      @state = value
+      persist
     end
 
     def persist
