@@ -1,9 +1,8 @@
 module FlipFab
   class Persistence
-
     attr_reader :feature_name, :context
 
-    def initialize feature_name, context
+    def initialize(feature_name, context)
       @feature_name = feature_name
       @context      = context
     end
@@ -12,7 +11,7 @@ module FlipFab
       raise NotImplementedError
     end
 
-    def write state
+    def write(state)
       raise NotImplementedError
     end
   end

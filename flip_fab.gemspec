@@ -8,12 +8,12 @@ Gem::Specification.new do |spec|
   spec.version       = FlipFab::VERSION
   spec.authors       = ['Simply Business']
   spec.email         = ['tech@simplybusiness.co.uk']
-  spec.description   = %q{A gem providing persistent, per-user feature flipping to Rack applications.}
-  spec.summary       = %q{A gem providing persistent, per-user feature flipping to Rack applications.}
+  spec.description   = 'A gem providing persistent, per-user feature flipping to Rack applications.'
+  spec.summary       = 'A gem providing persistent, per-user feature flipping to Rack applications.'
   spec.homepage      = 'https://github.com/simplybusiness/flip_fab'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']

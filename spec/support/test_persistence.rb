@@ -1,6 +1,5 @@
 class TestPersistence < FlipFab::Persistence
-
-  def initialize feature_name, context
+  def initialize(feature_name, context)
     super
   end
 
@@ -8,7 +7,7 @@ class TestPersistence < FlipFab::Persistence
     context.feature_states[feature_name]
   end
 
-  def write state
+  def write(state)
     context.feature_states[feature_name] = state
   end
 end

@@ -1,12 +1,11 @@
 module FlipFab
   class CookiePersistence < FlipFab::Persistence
+    COOKIE_PATH = '/'.freeze
+    COOKIE_DURATION_MONTHS = 12
+    # See: https://github.com/rails/rails/blob/b1124a2ac88778c0feb0157ac09367cbd204bf01/actionpack/lib/action_dispatch/middleware/cookies.rb#L214
+    DOMAIN_REGEXP          = /[^.]*\.([^.]*|..\...|...\...)$/
 
-      COOKIE_PATH            = '/'
-      COOKIE_DURATION_MONTHS = 12
-      # See: https://github.com/rails/rails/blob/b1124a2ac88778c0feb0157ac09367cbd204bf01/actionpack/lib/action_dispatch/middleware/cookies.rb#L214
-      DOMAIN_REGEXP          = /[^.]*\.([^.]*|..\...|...\...)$/
-
-    def initialize feature_name, context
+    def initialize(feature_name, context)
       super
     end
 
@@ -14,14 +13,12 @@ module FlipFab
       value.to_sym unless value.nil?
     end
 
-    def write state
+    def write(state)
       cookie_domain = ".#{top_level_domain}" unless top_level_domain.nil?
-      context.response.set_cookie key, {
-        value:   state,
-        expires: cookie_expiration,
-        domain:  cookie_domain,
-        path:    COOKIE_PATH,
-      }
+      context.response.set_cookie key, value:   state,
+                                       expires: cookie_expiration,
+                                       domain:  cookie_domain,
+                                       path:    COOKIE_PATH
     end
 
     private
@@ -36,9 +33,7 @@ module FlipFab
 
     # See: https://github.com/rails/rails/blob/b1124a2ac88778c0feb0157ac09367cbd204bf01/actionpack/lib/action_dispatch/middleware/cookies.rb#L286-L294
     def top_level_domain
-      if (host !~ /^[\d.]+$/) && (host =~ DOMAIN_REGEXP)
-        $&
-      end
+      $& if (host !~ /^[\d.]+$/) && (host =~ DOMAIN_REGEXP)
     end
 
     def cookie_expiration

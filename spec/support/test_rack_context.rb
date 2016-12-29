@@ -3,10 +3,10 @@ class TestRackContext
 
   attr_reader :request, :response
 
-  def initialize cookies, host
-    @request  = Rack::Request.new({ 'HTTP_COOKIE' => cookies, 'HTTP_HOST' => host })
+  def initialize(cookies, host)
+    @request  = Rack::Request.new('HTTP_COOKIE' => cookies, 'HTTP_HOST' => host)
     @response = Rack::Response.new
-    request.cookies.each{|k,v| response.set_cookie k, v }
+    request.cookies.each { |k, v| response.set_cookie k, v }
   end
 
   def response_cookies
