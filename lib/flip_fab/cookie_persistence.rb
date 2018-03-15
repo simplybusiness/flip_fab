@@ -15,6 +15,7 @@ module FlipFab
 
     def write(state)
       cookie_domain = ".#{top_level_domain}" unless top_level_domain.nil?
+      context.session[key] = state
       context.response.set_cookie key, value:   state,
                                        expires: cookie_expiration,
                                        domain:  cookie_domain,
@@ -28,7 +29,7 @@ module FlipFab
     end
 
     def value
-      @value ||= context.request.cookies[key]
+      @value ||= context.session[key] || context.request.cookies[key]
     end
 
     # See: https://github.com/rails/rails/blob/b1124a2ac88778c0feb0157ac09367cbd204bf01/actionpack/lib/action_dispatch/middleware/cookies.rb#L286-L294

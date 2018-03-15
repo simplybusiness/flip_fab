@@ -1,7 +1,7 @@
 module FlipFab
   module Helper
-    def features
-      @features ||= FlipFab.features.with_context self
+    def features(feature_context = self)
+      @features ||= FlipFab.features.with_context feature_context
     end
   end
 end

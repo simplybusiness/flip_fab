@@ -5,6 +5,12 @@ module FlipFab
     def initialize(feature, context)
       @feature = feature
       @context = context
+    end
+
+    # Should we make this apply_override work for existing functionality like ci5, seedy or other apps.
+    # Updating documentation
+    def apply_overrides
+      #require 'pry'; binding.pry if feature.name == :us_move_contact_details
       return unless overridden?
       @state = override
       persist

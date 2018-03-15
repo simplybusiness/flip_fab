@@ -17,6 +17,14 @@ module FlipFab
       FeaturesByName.new Hash[@features_by_name.map { |name, feature| [name, (feature.with_context context)] }]
     end
 
+
+
+    def apply_overrides
+      each { |_, feature|  feature.apply_overrides}
+    end
+
     def_delegators :@features_by_name, :[]=, :clear, :count, :each
   end
 end
+
+
