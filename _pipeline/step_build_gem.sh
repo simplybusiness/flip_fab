@@ -2,4 +2,4 @@
 source "/opt/sb/sb-pipeline.sh"
 set -e
 
-gem_deploy ab_fab.gemspec
+gem_deploy flip_fab.gemspec
