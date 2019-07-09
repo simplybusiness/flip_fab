@@ -31,5 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'rutabaga', '~> 2.1'
   spec.add_development_dependency 'timecop', '~> 0.8'
-  spec.add_development_dependency 'rubocop', '~> 0.46'
+  spec.add_development_dependency 'rubocop', '~> 0.49'
 end
