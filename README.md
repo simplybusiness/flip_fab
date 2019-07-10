@@ -1,5 +1,4 @@
-Flip Fab
---------
+# Flip Fab
 
 **Feature flipping... Made FaBuLoUs!**
 
@@ -166,3 +165,10 @@ Perform the following to try the example:
 1. Start rails: `bundle exec rails s`
 1. View the page with the feature disabled: `open 'http://localhost:3000/beavers?justin_beaver=disabled'`
 1. View the page with the feature enabled: `open 'http://localhost:3000/beavers?justin_beaver=enabled'`
+
+## Contributing
+
+1. Make your changes in a branch
+1. Update the version using semantic versioning in `lib/flip_fab/version.rb`
+1. Once signed off, merge
+1. The gem will automatically be pushed to gemstash
