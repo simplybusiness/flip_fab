@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/simplybusiness/flip_fab'
   spec.license       = 'MIT'
 
-  spec.metadata['allowed_push_host'] = 'http://gemstash.simplybusiness.io/private'
+  spec.metadata['allowed_push_host'] = 'https://gemstash.simplybusiness.io/private'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
