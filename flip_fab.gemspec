@@ -3,15 +3,9 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'flip_fab/version'
 
-gem_version = if ENV['GEM_PRE_RELEASE'].nil? || ENV['GEM_PRE_RELEASE'].empty?
-  FlipFab::VERSION
-else
-  "#{FlipFab::VERSION}.#{ENV['GEM_PRE_RELEASE']}"
-end
-
 Gem::Specification.new do |spec|
   spec.name          = 'flip_fab'
-  spec.version       = gem_version
+  spec.version       = FlipFab::VERSION
   spec.authors       = ['Simply Business']
   spec.email         = ['tech@simplybusiness.co.uk']
   spec.description   = 'A gem providing persistent, per-user feature flipping to Rack applications.'
