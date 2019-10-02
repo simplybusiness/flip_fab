@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.49'
 
   # SB-specific versioning "algorithm" to accommodate BNW/Jenkins/gemstash
-  spec.version = "#{spec.version.to_s}.#{ENV['GEM_PRE_RELEASE'].strip}" \
+  spec.version = (spec.version.to_s << '.' << ENV['GEM_PRE_RELEASE'].strip) \
   unless ENV.fetch('GEM_PRE_RELEASE', '').strip.empty?
 end
