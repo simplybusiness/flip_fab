@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'flip_fab/version'
 
 # SB-specific versioning "algorithm" to accommodate BNW/Jenkins/gemstash
-version = FlipFab::VERSION.dup
-version << '.' << ENV['GEM_PRE_RELEASE'].strip \
+version = FlipFab::VERSION
+version = "#{version}.#{ENV['GEM_PRE_RELEASE'].strip}" \
   unless ENV.fetch('GEM_PRE_RELEASE', '').strip.empty?
 
 Gem::Specification.new do |spec|
