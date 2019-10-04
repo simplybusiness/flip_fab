@@ -2,15 +2,11 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'flip_fab/version'
-
-# SB-specific versioning "algorithm" to accommodate BNW/Jenkins/gemstash
-version = FlipFab::VERSION
-version = "#{version}.#{ENV['GEM_PRE_RELEASE'].strip}" \
-  unless ENV.fetch('GEM_PRE_RELEASE', '').strip.empty?
-
+  
 Gem::Specification.new do |spec|
   spec.name          = 'flip_fab'
-  spec.version       = version
+  # SB-specific versioning "algorithm" to accommodate BNW/Jenkins/gemstash
+  spec.version       = ENV.fetch('GEM_PRE_RELEASE', '').strip.empty? ? FlipFab::VERSION : "#{FlipFab::VERSION}.#{ENV['GEM_PRE_RELEASE'].strip}"
   spec.authors       = ['Simply Business']
   spec.email         = ['tech@simplybusiness.co.uk']
   spec.description   = 'A gem providing persistent, per-user feature flipping to Rack applications.'
