@@ -37,7 +37,7 @@ Feature: Persisting the feature state in a cookie
 
   Scenario: The cookie should expire after 1 year
     When I persist the feature state in a cookie
-    Then the cookie expires at 'Fri, 22 Jan 2016 15:26:31 -0000'
+    Then the cookie expires at 'Fri, 22 Jan 2016 15:26:31 GMT'
 
   Scenario Outline: The cookie's value should be the state of the feature
    Given the state of the feature is '<feature state>'

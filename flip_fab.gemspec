@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rack', '~> 2.0'
-  spec.add_development_dependency 'rack-test', '~> 0.6'
+  spec.add_development_dependency 'rack', '>=2.1.1'
+  spec.add_development_dependency 'rack-test'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'rutabaga', '~> 3.0'
   spec.add_development_dependency 'timecop', '~> 0.8'
