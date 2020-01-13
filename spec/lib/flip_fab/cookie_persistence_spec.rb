@@ -80,7 +80,7 @@ module FlipFab
       after  { Timecop.return }
 
       it 'saves the feature state' do
-        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; domain=.simplybusiness.co.uk; path=/; expires=Tue, 01 Jan 1991 00:00:00 -0000')
+        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; domain=.simplybusiness.co.uk; path=/; expires=Tue, 01 Jan 1991 00:00:00 GMT')
       end
     end
   end
