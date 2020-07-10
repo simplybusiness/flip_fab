@@ -1,0 +1,29 @@
+version: v1.0
+name: Semaphore v2 tests
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+auto_cancel:
+  running:
+    when: branch != 'master'
+blocks:
+  - name: Semaphore v2 tests
+    execution_time_limit:
+      minutes: 10
+    task:
+      prologue:
+        commands:
+          - checkout
+          - sem-version ruby 2.6.5
+          - 'cache restore bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock),bundle-$SEMAPHORE_GIT_BRANCH,bundle-master'
+          - time bundle install --path vendor/bundle -j1
+          - bundle clean --force
+          - cache store bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock) vendor/bundle
+      jobs:
+        - name: Rubocop
+          commands:
+            - '[ -f ./script/cibuild ] && sh ./script/cibuild || echo "Skipping. No cibuild script to run"'
+        - name: Rspec job
+          commands:
+            - time bundle exec rspec
