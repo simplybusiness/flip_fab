@@ -15,11 +15,15 @@ blocks:
       prologue:
         commands:
           - checkout
-          - sem-version ruby 2.6.5
-          - 'cache restore bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock),bundle-$SEMAPHORE_GIT_BRANCH,bundle-master'
-          - time bundle install --path vendor/bundle -j1
+          - cache restore bundle-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID,bundle-$SEMAPHORE_GIT_BRANCH,bundle-master
+#          Use the following if your project has a Gemfile.lock
+#          - cache restore bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock),bundle-$SEMAPHORE_GIT_BRANCH,bundle-master
+          - bundle config gemstash.simplybusiness.io $GEMSTASH_USER:$GEMSTASH_PASSWORD
+          - bundle install --path vendor/bundle
           - bundle clean --force
-          - cache store bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock) vendor/bundle
+          - cache store bundle-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID vendor/bundle
+#          Use the following if your project has a Gemfile.lock
+#          - cache store bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock) vendor/bundle
       jobs:
         - name: Rubocop
           commands:
