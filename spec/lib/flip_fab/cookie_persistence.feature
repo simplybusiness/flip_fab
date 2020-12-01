@@ -10,21 +10,6 @@ Feature: Persisting the feature state in a cookie
     When I persist the feature state in a cookie
     Then the cookie has the path '/'
 
-  Scenario Outline: The cookie should apply for all domains under the top-level domain (no domain for localhost or IP addresses, however)
-    Given the host is '<host>'
-     When I persist the feature state in a cookie
-     Then the cookie has the domain '<cookie domain>'
-
-    Examples:
-      | host                           | cookie domain         |
-      | localhost                      |                       |
-      | 127.0.0.1                      |                       |
-      | 192.168.2.40                   |                       |
-      | www.simplybusiness.co.uk       | .simplybusiness.co.uk |
-      | www.quote.simplybusiness.co.uk | .simplybusiness.co.uk |
-      | simplybusiness.co.uk           | .simplybusiness.co.uk |
-      | www.simplybusiness.com         | .simplybusiness.com   |
-
   Scenario Outline: The cookie should be named using the name of the gem and name of feature, concatenated with a dot
     Given the feature name is '<feature name>'
      When I persist the feature state in a cookie
