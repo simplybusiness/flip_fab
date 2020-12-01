@@ -49,7 +49,7 @@ module FlipFab
       end
 
       step 'the cookie expires at :expiration' do |expiration|
-        expect(@cookie).to match(/expires=#{expiration}\Z/)
+        expect(@cookie).to match("flip_fab.example_feature=enabled; path=/; expires=#{expiration}; secure")
       end
 
       step 'the cookie value is :value' do |value|
@@ -80,7 +80,7 @@ module FlipFab
       after  { Timecop.return }
 
       it 'saves the feature state' do
-        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; path=/; expires=Tue, 01 Jan 1991 00:00:00 GMT')
+        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; path=/; expires=Tue, 01 Jan 1991 00:00:00 GMT; secure')
       end
     end
   end
