@@ -36,6 +36,10 @@ module FlipFab
         expect(@cookie).to match(/path=#{path};/)
       end
 
+      step 'the cookie does not have domain :domain' do |domain|
+        expect(@cookie).not_to match(/domain=#{domain};/)
+      end
+
       step 'the cookie has the name :name' do |name|
         expect(@cookie).to match(/\A#{name}.*/)
       end
