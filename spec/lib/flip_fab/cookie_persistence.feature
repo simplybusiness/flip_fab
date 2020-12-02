@@ -10,10 +10,10 @@ Feature: Persisting the feature state in a cookie
     When I persist the feature state in a cookie
     Then the cookie has the path '/'
 
-  Scenario Outline: The cookie should apply for all domains under the top-level domain (no domain for localhost or IP addresses, however)
+  Scenario Outline: The cookie populated should not contain domain
     Given the host is '<host>'
      When I persist the feature state in a cookie
-     Then the cookie has the domain '<cookie domain>'
+     Then the cookie does not have domain '<cookie domain>'
 
     Examples:
       | host                           | cookie domain         |

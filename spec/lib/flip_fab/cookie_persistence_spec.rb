@@ -36,12 +36,8 @@ module FlipFab
         expect(@cookie).to match(/path=#{path};/)
       end
 
-      step 'the cookie has the domain :domain' do |domain|
-        if domain == ''
-          expect(@cookie).not_to match(/domain/)
-        else
-          expect(@cookie).to match(/domain=#{domain};/)
-        end
+      step 'the cookie does not have domain :domain' do |domain|
+        expect(@cookie).not_to match(/domain=#{domain};/)
       end
 
       step 'the cookie has the name :name' do |name|
@@ -80,7 +76,7 @@ module FlipFab
       after  { Timecop.return }
 
       it 'saves the feature state' do
-        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; domain=.simplybusiness.co.uk; path=/; expires=Tue, 01 Jan 1991 00:00:00 GMT')
+        expect { subject.write :enabled }.to change { context.response_cookies }.from(nil).to('flip_fab.example_feature=enabled; path=/; expires=Tue, 01 Jan 1991 00:00:00 GMT')
       end
     end
   end

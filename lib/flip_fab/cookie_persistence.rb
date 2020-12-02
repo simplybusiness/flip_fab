@@ -14,10 +14,8 @@ module FlipFab
     end
 
     def write(state)
-      cookie_domain = ".#{top_level_domain}" unless top_level_domain.nil?
       context.response.set_cookie key, value:   state,
                                        expires: cookie_expiration,
-                                       domain:  cookie_domain,
                                        path:    COOKIE_PATH
     end
 
