@@ -14,9 +14,9 @@ module FlipFab
     end
 
     def write(state)
-      context.response.set_cookie key, value:   state,
+      context.response.set_cookie key, value: state,
                                        expires: cookie_expiration,
-                                       path:    COOKIE_PATH
+                                       path: COOKIE_PATH
     end
 
     private
@@ -31,7 +31,7 @@ module FlipFab
 
     # See: https://github.com/rails/rails/blob/b1124a2ac88778c0feb0157ac09367cbd204bf01/actionpack/lib/action_dispatch/middleware/cookies.rb#L286-L294
     def top_level_domain
-      $& if (host !~ /^[\d.]+$/) && (host =~ DOMAIN_REGEXP)
+      Regexp.last_match(0) if (host !~ /^[\d.]+$/) && (host =~ DOMAIN_REGEXP)
     end
 
     def cookie_expiration

@@ -1,5 +1,4 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'flip_fab/version'
 
@@ -24,6 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack-test'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'rutabaga', '~> 3.0'
+  spec.add_development_dependency 'simplycop', '~> 1.9'
   spec.add_development_dependency 'timecop', '~> 0.8'
-  spec.add_development_dependency 'rubocop', '~> 0.49'
 end

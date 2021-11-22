@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'rails/all'
 
@@ -20,6 +20,6 @@ module RailsApp
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.eager_load_paths += %W(#{config.root}/lib)
+    config.eager_load_paths += %W[#{config.root}/lib]
   end
 end

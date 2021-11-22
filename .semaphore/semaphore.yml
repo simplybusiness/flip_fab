@@ -3,31 +3,47 @@ name: Semaphore v2 tests
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+    os_image: ubuntu2004
 auto_cancel:
   running:
     when: branch != 'master'
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+      - sem-version ruby $RUBY_VERSION -f
+      - gem update --system
+      - bundle config set --local path 'vendor/bundle'
+      - cache restore bundle-$RUBY_VERSION-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID,bundle-$RUBY_VERSION-$SEMAPHORE_GIT_BRANCH,bundle-$RUBY_VERSION-master
+      - bundle install
+      - bundle clean --force
+      - cache store bundle-$RUBY_VERSION-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID vendor/bundle
+  secrets:
+    - name: bundler-global
 blocks:
   - name: Semaphore v2 tests
+    dependencies: []
+    execution_time_limit:
+      minutes: 30
+    task:
+      jobs:
+        - name: Tests
+          matrix:
+            - env_var: RUBY_VERSION
+              values: ["2.6.5", "2.7", "3.0"]
+          commands:
+            - bundle exec rspec
+  - name: Semaphore v2 Compliance
+    dependencies: []
+    skip:
+      when: branch = 'master'
     execution_time_limit:
       minutes: 10
     task:
-      prologue:
-        commands:
-          - checkout
-          - cache restore bundle-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID,bundle-$SEMAPHORE_GIT_BRANCH,bundle-master
-#          Use the following if your project has a Gemfile.lock
-#          - cache restore bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock),bundle-$SEMAPHORE_GIT_BRANCH,bundle-master
-          - bundle config gemstash.simplybusiness.io $GEMSTASH_USER:$GEMSTASH_PASSWORD
-          - bundle install --path vendor/bundle
-          - bundle clean --force
-          - cache store bundle-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID vendor/bundle
-#          Use the following if your project has a Gemfile.lock
-#          - cache store bundle-$SEMAPHORE_GIT_BRANCH-$(checksum Gemfile.lock) vendor/bundle
       jobs:
         - name: Rubocop
           commands:
-            - '[ -f ./script/cibuild ] && sh ./script/cibuild || echo "Skipping. No cibuild script to run"'
-        - name: Rspec job
-          commands:
-            - time bundle exec rspec
+            - bundle exec rubocop
+      env_vars:
+        - name: RUBY_VERSION
+          value: 2.6.5
