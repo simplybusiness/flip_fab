@@ -10,6 +10,7 @@ module FlipFab
 
     def [](name)
       raise "no feature has been defined with the name: #{name}" if @features_by_name[name].nil?
+
       @features_by_name[name]
     end
 

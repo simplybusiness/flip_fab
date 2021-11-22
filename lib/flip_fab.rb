@@ -19,6 +19,6 @@ module FlipFab
 end
 
 if defined?(ActionController)
-  ActionController::Base.send :include, FlipFab::Helper
+  ActionController::Base.include FlipFab::Helper
   ActionController::Base.helper FlipFab::Helper
 end

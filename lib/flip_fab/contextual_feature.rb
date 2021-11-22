@@ -6,6 +6,7 @@ module FlipFab
       @feature = feature
       @context = context
       return unless overridden?
+
       @state = override
       persist
     end
@@ -27,8 +28,9 @@ module FlipFab
     end
 
     def state=(value)
-      raise "Invalid state provided: `#{value}`, possible states are :enabled, :disabled" unless %i(enabled disabled).include? value
+      raise "Invalid state provided: `#{value}`, possible states are :enabled, :disabled" unless %i[enabled disabled].include? value
       return if overridden?
+
       @state = value
       persist
     end
@@ -65,8 +67,10 @@ module FlipFab
 
     def override
       return unless context.respond_to? :params
+
       override = context.params[feature.name.to_s]
-      return unless %w(enabled disabled).include? override
+      return unless %w[enabled disabled].include? override
+
       override.to_sym
     end
 

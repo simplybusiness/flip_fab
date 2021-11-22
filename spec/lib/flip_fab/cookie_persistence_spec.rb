@@ -49,7 +49,7 @@ module FlipFab
       end
 
       step 'the cookie value is :value' do |value|
-        expect(@cookie).to match(/\=#{value};/)
+        expect(@cookie).to match(/=#{value};/)
       end
     end
 
