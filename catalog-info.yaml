@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: flip_fab
+  description: A gem providing persistent, per-user feature flipping to Rack applications
+spec:
+  type: library
+  lifecycle: production
