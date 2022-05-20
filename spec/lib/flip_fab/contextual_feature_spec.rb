@@ -8,6 +8,13 @@ module FlipFab
     let(:context)              { TestContext.new feature_states, 'example_feature' => override }
     subject { described_class.new feature, context }
 
+    describe '.as_json' do
+      it 'returns only the feature' do
+        expect(subject.as_json.keys).to eq(['feature'])
+      end
+
+    end
+
     describe '.new' do
       it 'assigns the feature' do
         expect(subject.feature).to eq(feature)
