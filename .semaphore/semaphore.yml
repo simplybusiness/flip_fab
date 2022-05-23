@@ -30,7 +30,7 @@ blocks:
         - name: Tests
           matrix:
             - env_var: RUBY_VERSION
-              values: ["2.6.5", "2.7", "3.0"]
+              values: ["2.7", "3.0"]
           commands:
             - bundle exec rspec
   - name: Semaphore v2 Compliance
