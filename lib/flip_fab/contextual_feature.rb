@@ -11,6 +11,12 @@ module FlipFab
       persist
     end
 
+    def as_json(options = {})
+      {
+        'feature' => feature.as_json(options)
+      }
+    end
+
     def enabled?
       state == :enabled
     end
