@@ -1,5 +1,5 @@
 module FlipFab
-  describe ContextualFeature do
+  describe ContextualFeature do # rubocop:disable Metrics/BlockLength
     let(:override)             {}
     let(:default)              { :disabled }
     let(:persistence_adapters) { [TestPersistence] }
@@ -12,7 +12,6 @@ module FlipFab
       it 'returns only the feature' do
         expect(subject.as_json.keys).to eq(['feature'])
       end
-
     end
 
     describe '.new' do
