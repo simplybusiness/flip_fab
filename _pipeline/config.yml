@@ -1,0 +1,4 @@
+global:
+  APP_NAME: 'flip_fab'
+  SEMAPHORE_V2_PROJECT_ID: '24f26ef9-7124-48b3-adfa-bdaaaec45213'
+  APP_SLACK_DEPLOYMENT_CHANNEL: 'alchemists-gems-release'

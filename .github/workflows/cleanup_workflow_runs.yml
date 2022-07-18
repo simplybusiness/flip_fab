@@ -1,0 +1,32 @@
+name: Clean Up Workflows
+
+on:
+  schedule:
+    - cron: "42 1 * * *"
+
+jobs:
+  cleanup_workflow_runs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          repository: simplybusiness/cleanup-workflow-runs
+          ref: refs/heads/master
+          token: ${{ secrets.X_BOT_ORG_REPO_ONLY_TOKEN }}
+          path: './'
+      - run: './run.sh'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_TO_CHECK: 'failure'
+      - run: './run.sh'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_TO_CHECK: 'completed'
+      - run: './run.sh'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_TO_CHECK: 'cancelled'
+      - run: './run.sh'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_TO_CHECK: 'completed'
