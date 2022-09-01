@@ -22,7 +22,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Bump version
-        uses: simplybusiness/dobby@v3.0.1
+        uses: simplybusiness/dobby@v3.1.0
         env:
           DOBBY_APP_ID: ${{ secrets.DOBBY_APP_ID }}
           DOBBY_PRIVATE_KEY: ${{ secrets.DOBBY_PRIVATE_KEY }}
