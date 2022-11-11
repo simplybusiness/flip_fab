@@ -22,7 +22,7 @@ class BeaversController < ApplicationController
   # POST /beavers
   # POST /beavers.json
   def create
-    @beaver = Beaver.new(beaver_params)
+    @beaver = Beaver.new()
 
     respond_to do |format|
       if @beaver.save
