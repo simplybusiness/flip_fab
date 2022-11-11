@@ -46,4 +46,5 @@ blocks:
             - bundle exec rubocop
       env_vars:
         - name: RUBY_VERSION
-          value: 2.6.5
+          value: 3.0.4
+
