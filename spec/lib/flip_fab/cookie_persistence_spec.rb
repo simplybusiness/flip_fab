@@ -72,7 +72,7 @@ module FlipFab
     end
 
     describe '#write' do
-      before { Timecop.freeze(Time.local(1990)) }
+      before { Timecop.freeze(Time.utc(1990)) }
       after  { Timecop.return }
 
       it 'saves the feature state' do
