@@ -1,4 +1,11 @@
-# Flip Fab
+Flip Fab [DEPRECATED]
+----
+
+Status: DEPRECATED
+
+Please use Amplitude Experiment instead for AB testing in Chopin! More [here](https://github.com/simplybusiness/chopin/blob/master/doc/amplitude.md).
+
+----
 
 **Feature flipping... Made FaBuLoUs!**
 
