@@ -5,4 +5,4 @@ metadata:
   description: A gem providing persistent, per-user feature flipping to Rack applications
 spec:
   type: library
-  lifecycle: production
+  lifecycle: deprecated
