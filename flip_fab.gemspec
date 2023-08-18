@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rutabaga', '~> 3.0'
   spec.add_development_dependency 'simplycop', '~> 1.9'
   spec.add_development_dependency 'timecop', '~> 0.8'
+  spec.post_install_message = 'FlipFab is deprecated and everyone should use Amplitude Experiment instead!'
 end
